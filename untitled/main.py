@@ -1,5 +1,5 @@
-import pygame, sys, time
-from pip._vendor.pyparsing import White
+import pygame, sys
+from textures import *
 
 pygame.init()
 
@@ -37,9 +37,9 @@ while isRunning:
     window.fill((0,0,0))
     
     # - Render Simple Terrain Grid
-    for x in range(0, 640, tile_size):
-        for y in range(0, 480, tile_size):
-            pygame.draw.rect(window, (255,255,0), (x, y, tile_size + 1, tile_size + 1), 1)
+    for x in range(0, 800, tile_size):
+        for y in range(0, 600, tile_size):
+            window.blit(Tiles.Grass, (x,y))
     
     
     show_fps()
