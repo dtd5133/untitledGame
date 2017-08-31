@@ -4,7 +4,7 @@ Created on Aug 31, 2017
 @author: ddimarcello
 '''
 
-import sys
+import sys, pygame
 from scripts.globals import *
 from scripts.map_engine import *
 
@@ -13,7 +13,7 @@ pygame.init()
 clock = pygame.time.Clock()
 
 terrain = Map_Engine.load_map("maps\\world.map")
-
+pygame.display.set_caption("Boudicca")
 
 fps_font = pygame.font.Font("C:\\Windows\\Fonts\\Verdana.ttf", 20)
 fps = 1
@@ -55,8 +55,11 @@ while isRunning:
             elif event.key == pygame.K_d:
                 Globals.camera_move = 4
                 
-        elif event.type == pygame.KEYUP:
+        if event.type == pygame.KEYUP:
             Globals.camera_move = 0
+        
+        
+            
         
     #Logic
     if Globals.camera_move == 1:
