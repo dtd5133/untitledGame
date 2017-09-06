@@ -34,7 +34,34 @@ def export_map(file):
     with open(file, "w") as mapfile:
         mapfile.write(map_data)
 
-
+    
+def load_map(file):
+    global tile_data
+    with open(file, "r") as mapfile:
+        map_data = mapfile.read()
+    
+    map_data = map_data.split("-")
+    map_size = map_data[len(map_data) - 1]
+    map_data.remove(map_size)
+    map_size = map_size.split(",")
+    map_size[0] = int(map_size[0]) * Tiles.Size
+    map_size[1] = int(map_size[1]) * Tiles.Size
+    
+    tiles = []
+    
+    for tile in range(len(map_data)):
+        map_data[tile] = map_data[tile].replace("\n", "")
+        tiles.append(map_data[tile].split(":"))
+    
+    for tile in tiles:
+        tile[0] = tile[0].split(",")
+        pos = tile[0]
+        for p in pos:
+            pos[pos.index(p)] = int(p)
+        
+        tiles[tiles.index(tile)] = [pos[0] * Tiles.Size, pos[1] * Tiles.Size, tile[1]]
+        
+    tile_data = tiles
 
 window = pygame.display.set_mode((1280,720), pygame.HWSURFACE)
 pygame.display.set_caption("Map Editor")
@@ -92,7 +119,13 @@ while isRunning:
                 name = input("Map Name: ")
                 export_map(name+".map")  
                 print("Map saved successfully")
-                 
+                
+            #LOAD MAP    
+            elif event.key == pygame.K_F10:
+                name = input("Map Name: ")
+                load_map(name+".map") 
+                print("Map loaded successfully")
+                    
         elif event.type == pygame.KEYUP:
             camera_move = 0 
             
