@@ -19,8 +19,7 @@ terrain = Map_Engine.load_map("maps\\world.map")
 pygame.display.set_caption("Boudicca")
 
 fps_font = pygame.font.Font("C:\\Windows\\Fonts\\Verdana.ttf", 20)
-fps = 1
-deltatime = 1
+fps = 0
 
 sky = pygame.image.load("graphics\\sky.png")
 Sky = pygame.Surface(sky.get_size(), pygame.HWSURFACE)
@@ -50,6 +49,10 @@ player = Player("Boudicca")
 player_w, player_h = player.width, player.height
 player_x = (window_width / 2 - player_w / 2 -  Globals.camera_x)
 player_y = (window_height / 2 - player_h / 2 -  Globals.camera_y)
+
+man1 = Male1(name = "Eoin", pos = (200, 300))
+man2 = Male1(name = "Ryan", pos = (260, 300))
+
 
 #Initialize GUI
 
@@ -130,16 +133,16 @@ while isRunning:
         #Logic
         if Globals.camera_move == 1:
             if not Tiles.Blocked_At((round(player_x), math.floor(player_y))):
-                Globals.camera_y += deltatime * 300
+                Globals.camera_y += Globals.deltatime * 300
         elif Globals.camera_move == 2:
             if not Tiles.Blocked_At((round(player_x), math.ceil(player_y))):
-                Globals.camera_y -= deltatime * 300
+                Globals.camera_y -= Globals.deltatime * 300
         elif Globals.camera_move == 3:
             if not Tiles.Blocked_At((math.floor(player_x), round(player_y))):
-                Globals.camera_x += deltatime * 300
+                Globals.camera_x += Globals.deltatime * 300
         elif Globals.camera_move == 4:
             if not Tiles.Blocked_At((math.ceil(player_x), round(player_y))):
-                Globals.camera_x -= deltatime * 300
+                Globals.camera_x -= Globals.deltatime * 300
         
         player_x = (window_width / 2 - player_w / 2 -  Globals.camera_x) / Tiles.Size
         player_y = (window_height / 2 - player_h / 2 -  Globals.camera_y) / Tiles.Size
@@ -152,6 +155,9 @@ while isRunning:
         
         player.render(window, (window_width / 2 - player_w / 2,
                                window_height / 2 - player_h / 2))
+    
+        for npc in NPC.AllNPCs:
+            npc.Render(window)
     
     
     #Process Menu
@@ -175,7 +181,7 @@ while isRunning:
     
     clock.tick()
     fps = clock.get_fps()
-    deltatime = 1/(fps+1)
+    Globals.deltatime = 1/(fps+1)
             
 pygame.quit()
 sys.exit()    
