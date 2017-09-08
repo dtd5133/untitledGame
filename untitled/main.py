@@ -10,6 +10,7 @@ from scripts.map_engine import *
 from scripts.NPC import *
 from scripts.player import *
 from scripts.main_gui import *
+from test.test_crashers import infinite_loops
 
 pygame.init()
 
@@ -50,14 +51,22 @@ player_w, player_h = player.width, player.height
 player_x = (window_width / 2 - player_w / 2 -  Globals.camera_x)
 player_y = (window_height / 2 - player_h / 2 -  Globals.camera_y)
 
+# #Initialize Music
+# pygame.mixer.music.load("music\\title.wav")
+# pygame.mixer.music.play(-1)
+
 man1 = Male1(name = "Eoin", pos = (200, 300))
 man2 = Male1(name = "Ryan", pos = (260, 300))
 
+#Initialize sounds
+# btnSounds = pygame.mixer.Sound("sounds\\button.wav")
 
 #Initialize GUI
 
 def Play():
     Globals.scene = "game"
+#     pygame.mixer.music.load("music\\forest.wav")
+#     pygame.mixer.music.play(-1)
 
 def Exit():
     global isRunning
@@ -124,6 +133,7 @@ while isRunning:
                     if btn.Tag[0] == Globals.scene and btn.Rolling:
                         if btn.Command != None:
                             btn.Command()   #Do button event
+                        #btnSound.play()
                         btn.Rolling = False
                         break   #Exit Loop
         
