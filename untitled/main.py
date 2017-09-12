@@ -5,12 +5,13 @@ Created on Aug 31, 2017
 '''
 
 import sys, pygame, math
-from scripts.globals import *
-from scripts.map_engine import *
+
 from scripts.NPC import *
-from scripts.player import *
+from scripts.globals import *
 from scripts.main_gui import *
-from test.test_crashers import infinite_loops
+from scripts.map_engine import *
+from scripts.player import *
+
 
 pygame.init()
 
@@ -18,6 +19,8 @@ clock = pygame.time.Clock()
 
 terrain = Map_Engine.load_map("maps\\world.map")
 pygame.display.set_caption("Boudicca")
+
+#tb = TaskBar()
 
 fps_font = pygame.font.Font("C:\\Windows\\Fonts\\Verdana.ttf", 20)
 fps = 0
@@ -71,7 +74,7 @@ def Play():
 def Exit():
     global isRunning
     isRunning = False
-
+    
 btnPlay = Menu.Button(text = "Play", rect = (0,0, 300, 60), tag = ("menu", None))
 btnPlay.Left = window_width / 2 - btnPlay.Width / 2
 btnPlay.Top = 100
@@ -158,7 +161,8 @@ while isRunning:
         player_y = (window_height / 2 - player_h / 2 -  Globals.camera_y) / Tiles.Size
         
         
-        #Render Graphics        
+        #Render Graphics
+        
         window.blit(Sky, (0,0))
         
         window.blit(terrain, (Globals.camera_x, Globals.camera_y))            
