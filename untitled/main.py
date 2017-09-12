@@ -121,7 +121,7 @@ while isRunning:
             elif event.key == pygame.K_d:
                 Globals.camera_move = 4
                 player.facing = "west"
-                
+                #pygame.mixer.music.play(-1)
         if event.type == pygame.KEYUP:
             Globals.camera_move = 0
         

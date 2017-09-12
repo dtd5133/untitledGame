@@ -154,7 +154,12 @@ while isRunning:
                             break
                             print("Tile Removed")
                 else:
-                    print("A tile is already placed here!")
+                    for t in tile_data:
+                        if tile[0] == t[0] and tile[1] == t[1]:
+                            tile_data.remove(t)
+                            tile_data.append(tile)
+                            print('Tile Replaced')
+                            break
     
     #LOGIC
     if camera_move == 1:
