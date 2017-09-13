@@ -35,9 +35,10 @@ class Tiles:
     Water = Load_Texture("graphics\\water.png", Size)
     Stone = Load_Texture("graphics\\stone.png", Size)
     Fence = Load_Texture("graphics\\fence.png", Size)
+    Sand = Load_Texture("graphics\\sand.png", Size)
     
     
-    Texture_Tags = {"1" : Grass, "2" : Stone, "3" : Water, "4" : Fence}
+    Texture_Tags = {"1" : Grass, "2" : Stone, "3" : Water, "4" : Fence, "5" : Sand}
     
     
     
