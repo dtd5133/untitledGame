@@ -11,6 +11,7 @@ from scripts.globals import *
 from scripts.main_gui import *
 from scripts.map_engine import *
 from scripts.player import *
+from scripts.Launcher import *
 
 
 pygame.init()
@@ -20,7 +21,6 @@ clock = pygame.time.Clock()
 terrain = Map_Engine.load_map("maps\\world.map")
 pygame.display.set_caption("Boudicca")
 
-#tb = TaskBar()
 
 fps_font = pygame.font.Font("C:\\Windows\\Fonts\\Verdana.ttf", 20)
 fps = 0
@@ -45,16 +45,19 @@ def createWindow():
     window_title = "untitled"
     window = pygame.display.set_mode((window_width, window_height), pygame.HWSURFACE|pygame.DOUBLEBUF)
 
-
+def openLauncher():
+    launcher = Launcher()
+    
 createWindow()
 
+openLauncher()
 
 player = Player("Boudicca")
 player_w, player_h = player.width, player.height
 player_x = (window_width / 2 - player_w / 2 -  Globals.camera_x)
 player_y = (window_height / 2 - player_h / 2 -  Globals.camera_y)
 
-# #Initialize Music
+#Initialize Music
 # pygame.mixer.music.load("music\\title.wav")
 # pygame.mixer.music.play(-1)
 
@@ -64,37 +67,10 @@ man2 = Male1(name = "Ryan", pos = (260, 300))
 #Initialize sounds
 # btnSounds = pygame.mixer.Sound("sounds\\button.wav")
 
-#Initialize GUI
-
-def Play():
-    Globals.scene = "game"
 #     pygame.mixer.music.load("music\\forest.wav")
 #     pygame.mixer.music.play(-1)
-
-def Exit():
-    global isRunning
-    isRunning = False
     
-btnPlay = Menu.Button(text = "Play", rect = (0,0, 300, 60), tag = ("menu", None))
-btnPlay.Left = window_width / 2 - btnPlay.Width / 2
-btnPlay.Top = 100
-btnPlay.Command = Play
-
-btnSave = Menu.Button(text = "Save", rect = (0, 0, 300, 60), tag = ("menu", None))
-btnSave.Left = window_width / 2 - btnPlay.Width / 2
-btnSave.Left = btnPlay.Left
-btnSave.Top = btnPlay.Top + btnSave.Height + 3
-
-btnLoad = Menu.Button(text = "Load", rect = (0, 0, 300, 60), tag = ("menu", None))
-btnLoad.Left = window_width / 2 - btnPlay.Width / 2
-btnLoad.Left = btnPlay.Left
-btnLoad.Top = btnPlay.Top + (btnLoad.Height + 3)*2
-
-btnExit = Menu.Button(text = "Exit", rect = (0, 0, 300, 60), tag = ("menu", None))
-btnExit.Left = window_width / 2 - btnPlay.Width / 2
-btnExit.Left = btnPlay.Left
-btnExit.Top = btnPlay.Top + (btnExit.Height + 3)*3
-btnExit.Command = Exit
+#Initialize GUI
 
 menuTitle = Menu.Text(text = "Boudicca", color = Color.Cyan, font = Font.Large)
 
@@ -103,6 +79,7 @@ logo = Menu.Image(bitmap = logo_img)
 
 menuTitle.Left, menuTitle.Top = window_width / 2 - menuTitle.Width / 2, 0
 
+global isRunning
 isRunning = True
 
 #events loop
