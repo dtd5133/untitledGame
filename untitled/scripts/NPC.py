@@ -80,7 +80,7 @@ class NPC:
     
 class Male1(NPC):
     def __init__(self, name, pos, dialog = None):
-        super().__init__(name, pos, dialog, pygame.image.load("Graphics\\NPC\\male1.png"))
+        super().__init__(name, pos, dialog, pygame.image.load("Graphics\\NPC\\Eoin.png"))
         
         
         
