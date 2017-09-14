@@ -76,7 +76,6 @@ menuTitle = Menu.Text(text = "Boudicca", color = Color.Cyan, font = Font.Large)
 
 logo = Menu.Image(bitmap = logo_img)
 
-
 menuTitle.Left, menuTitle.Top = window_width / 2 - menuTitle.Width / 2, 0
 
 global isRunning
@@ -102,6 +101,8 @@ while isRunning:
                 Globals.camera_move = 4
                 player.facing = "west"
                 #pygame.mixer.music.play(-1)
+            elif event.key == pygame.K_ESCAPE:
+                Globals.main_scene = "menu"
         if event.type == pygame.KEYUP:
             Globals.camera_move = 0
         
@@ -110,7 +111,8 @@ while isRunning:
                 
                 #Handle button click events
                 for btn in Menu.Button.All:
-                    if btn.Tag[0] == Globals.scene and btn.Rolling:
+                    print('test')
+                    if btn.Tag[0] == Globals.main_scene and btn.Rolling:
                         if btn.Command != None:
                             btn.Command()   #Do button event
                         #btnSound.play()
@@ -118,7 +120,7 @@ while isRunning:
                         break   #Exit Loop
         
     #Render scene    
-    if Globals.scene == "game":
+    if Globals.main_scene == "game":
         
         #Logic
         if Globals.camera_move == 1:
@@ -152,7 +154,7 @@ while isRunning:
     
     
     #Process Menu
-    elif Globals.scene == "menu":
+    elif Globals.main_scene == "menu":
         window.fill(Color.Fog)
         
         logo.Render(window)
@@ -163,7 +165,6 @@ while isRunning:
                 
                 btn.Render(window)
                 
-    
     
     show_fps()
     

@@ -39,7 +39,7 @@ class Menu:
 
         All = []
 
-        def __init__(self, text, rect, bg = Color.Gray, fg = Color.White, bgr = Color.CornflowerBlue, font = Font.Default, tag = ("menu", None)):
+        def __init__(self, text, rect, bg, fg, bgr, font = Font.Default, tag = ("menu", None)):
             self.Text = text
             self.Left = rect[0]
             self.Top = rect[1]
@@ -73,7 +73,44 @@ class Menu:
                 to.blit(self.Normal, (self.Left + pos[0], self.Top + pos[1]))
                 self.Rolling = False
 
+    class BrushButton:
 
+        All = []
+
+        def __init__(self, text, rect, bg, fg, bgr, font = Font.Default, tag = ("menu", None)):
+            self.Text = text
+            self.Left = rect[0]
+            self.Top = rect[1]
+            self.Width = rect[2]
+            self.Height = rect[3]
+            self.Command = None
+            self.Brush = None
+            self.Rolling = False
+            self.Tag = tag
+
+            # NORMAL BUTTON
+            self.Normal = pygame.Surface((self.Width, self.Height), pygame.HWSURFACE|pygame.SRCALPHA)
+            self.Normal.fill(bg)
+            RText = font.render(text, True, fg)   # text, antialiasing, color
+            txt_rect = RText.get_rect()
+            self.Normal.blit(RText, (self.Width / 2 - txt_rect[2] / 2, self.Height / 2 - txt_rect[3] / 2))
+
+            # HIGHLIGHTED BUTTON
+            self.High = pygame.Surface((self.Width, self.Height), pygame.HWSURFACE|pygame.SRCALPHA)
+            self.High.fill(bgr)
+            self.High.blit(RText, (self.Width / 2 - txt_rect[2] / 2, self.Height / 2 - txt_rect[3] / 2))
+
+            # SAVE BUTTON
+            Menu.Button.All.append(self)
+
+
+        def Render(self, to, pos = (0, 0)):
+            if MouseOver((self.Left + pos[0], self.Top + pos[1], self.Width, self.Height)):
+                to.blit(self.High, (self.Left + pos[0], self.Top + pos[1]))
+                self.Rolling = True
+            else:
+                to.blit(self.Normal, (self.Left + pos[0], self.Top + pos[1]))
+                self.Rolling = False
 
     class Text:
 
