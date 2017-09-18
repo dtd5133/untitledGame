@@ -13,7 +13,7 @@ from scripts.map_engine import *
 from scripts.player import *
 from scripts.Launcher import *
 
-
+pygame.mixer.pre_init(44100, -16, 1, 512)   
 pygame.init()
 
 clock = pygame.time.Clock()
@@ -58,8 +58,8 @@ player_x = (window_width / 2 - player_w / 2 -  Globals.camera_x)
 player_y = (window_height / 2 - player_h / 2 -  Globals.camera_y)
 
 #Initialize Music
-# pygame.mixer.music.load("music\\title.wav")
-# pygame.mixer.music.play(-1)
+pygame.mixer.music.load("sounds\\music\\zeldatheme.mp3")
+pygame.mixer.music.play(-1)
 
 man1 = Male1(name = "Eoin", pos = (200, 300))
 man2 = Male1(name = "Ryan", pos = (260, 300))

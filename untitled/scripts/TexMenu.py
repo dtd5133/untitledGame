@@ -3,6 +3,7 @@ Created on Sep 14, 2017
 
 @author: ddimarcello
 '''
+import pygame
 from scripts.UltraColor import Color
 from scripts.globals import Globals
 from scripts.main_gui import Menu
@@ -10,9 +11,12 @@ from scripts.main_gui import Menu
 
 class TexMenu:
     def __init__(self):
+        
+        btnClick = pygame.mixer.Sound("sounds\\menu-click.wav")
+        
         def Change():
             Globals.map_scene = "editor"
-            print("Globals.map_scene")
+            btnClick.play()
         
         window_width = 800
         

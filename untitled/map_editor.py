@@ -11,6 +11,8 @@ from scripts.globals import Globals
 from scripts.main_gui import Menu
 from scripts.textures import *
 
+pygame.mixer.pre_init(44100, -16, 1, 512)
+pygame.init()
 
 def export_map(file):
     map_data = ""
@@ -179,7 +181,6 @@ while isRunning:
                             if btn.Command != None:
                                 changeBrush(btn.Brush)
                                 btn.Command()  #Do button event
-                            #btnSound.play()
                             btn.Rolling = False
                             break   #Exit Loop
     
