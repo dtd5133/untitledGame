@@ -4,26 +4,34 @@ Created on Aug 31, 2017
 @author: ddimarcello
 '''
 
+import os
 import sys, pygame, math
+from tkinter.constants import LEFT
 
+from tkinter import *
+from scripts.Launcher import *
 from scripts.NPC import *
 from scripts.globals import *
 from scripts.main_gui import *
 from scripts.map_engine import *
 from scripts.player import *
-from scripts.Launcher import *
+import tkinter as tk
+
+
+root = tk.Tk()
+embed = tk.Frame(root, width = 500, height = 500) #creates embed frame for pygame window
+embed.grid(columnspan = (600), rowspan = 500) # Adds grid
+embed.pack(side = LEFT) #packs window to the left
+os.environ['SDL_WINDOWID'] = str(embed.winfo_id())
+os.environ['SDL_VIDEODRIVER'] = 'windib'
 
 pygame.mixer.pre_init(44100, -16, 1, 512)   
 pygame.init()
 
 clock = pygame.time.Clock()
 
-move_cd = 0
-MOVE_DELAY = 500
-move_clock = pygame.time.Clock()
-
 terrain = Map_Engine.load_map("maps\\world.map")
-pygame.display.set_caption("SideNote")
+pygame.display.set_caption("Boudicca")
 
 
 fps_font = pygame.font.Font("C:\\Windows\\Fonts\\Verdana.ttf", 20)
@@ -48,6 +56,8 @@ def createWindow():
     window_width, window_height = 800,600
     window_title = "untitled"
     window = pygame.display.set_mode((window_width, window_height), pygame.HWSURFACE|pygame.DOUBLEBUF)
+    pygame.display.init()
+    pygame.display.update()
 
 def openLauncher():
     launcher = Launcher()
@@ -87,33 +97,24 @@ isRunning = True
 
 #events loop
 while isRunning:
-    delta = move_clock.tick(10)/1000.0
-    move_cd -= delta
-    
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             isRunning = False
         
-        
         if event.type == pygame.KEYDOWN:
-            if move_cd <=0:
-                if event.key == pygame.K_w:
-                    walk_cooldown = MOVE_DELAY
-                    Globals.camera_move = 1
-                    player.facing = "north"
-                elif event.key == pygame.K_s:
-                    walk_cooldown = MOVE_DELAY
-                    Globals.camera_move = 2
-                    player.facing = "south"
-                elif event.key == pygame.K_a:
-                    walk_cooldown = MOVE_DELAY
-                    Globals.camera_move = 3
-                    player.facing = "east"
-                elif event.key == pygame.K_d:
-                    walk_cooldown = MOVE_DELAY
-                    Globals.camera_move = 4
-                    player.facing = "west"
-                    #pygame.mixer.music.play(-1)
+            if event.key == pygame.K_w:
+                Globals.camera_move = 1
+                player.facing = "north"
+            elif event.key == pygame.K_s:
+                Globals.camera_move = 2
+                player.facing = "south"
+            elif event.key == pygame.K_a:
+                Globals.camera_move = 3
+                player.facing = "east"
+            elif event.key == pygame.K_d:
+                Globals.camera_move = 4
+                player.facing = "west"
+                #pygame.mixer.music.play(-1)
             elif event.key == pygame.K_ESCAPE:
                 Globals.main_scene = "menu"
         if event.type == pygame.KEYUP:
@@ -138,16 +139,16 @@ while isRunning:
         #Logic
         if Globals.camera_move == 1:
             if not Tiles.Blocked_At((round(player_x), math.floor(player_y))):
-                Globals.camera_y += 32
+                Globals.camera_y += Globals.deltatime * 300
         elif Globals.camera_move == 2:
             if not Tiles.Blocked_At((round(player_x), math.ceil(player_y))):
-                Globals.camera_y -= 32
+                Globals.camera_y -= Globals.deltatime * 300
         elif Globals.camera_move == 3:
             if not Tiles.Blocked_At((math.floor(player_x), round(player_y))):
-                Globals.camera_x += 32
+                Globals.camera_x += Globals.deltatime * 300
         elif Globals.camera_move == 4:
             if not Tiles.Blocked_At((math.ceil(player_x), round(player_y))):
-                Globals.camera_x -= 32
+                Globals.camera_x -= Globals.deltatime * 300
         
         player_x = (window_width / 2 - player_w / 2 -  Globals.camera_x) / Tiles.Size
         player_y = (window_height / 2 - player_h / 2 -  Globals.camera_y) / Tiles.Size
@@ -183,9 +184,11 @@ while isRunning:
     
     
     pygame.display.update()
+    root.update()
     
-    clock.tick(60)
+    clock.tick()
     fps = clock.get_fps()
+    Globals.deltatime = 1/(fps+1)
             
 pygame.quit()
 sys.exit()    
